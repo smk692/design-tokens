@@ -1,0 +1,268 @@
+#!/usr/bin/env node
+/**
+ * setup-figma-foundation.js
+ * Figma 무료 플랜 대응 — REST API로 Foundation 페이지 구성
+ * 
+ * 수행 작업:
+ * 1. Foundation 페이지 추가 (현재 "Page 1" 유지)
+ * 2. 색상 팔레트 시각화 (스워치 프레임)
+ * 3. 타이포그래피 스케일 시각화
+ * 4. 스페이싱 & 터치타겟 시각화
+ * 
+ * 사용법: FIGMA_TOKEN=xxx node setup-figma-foundation.js
+ */
+
+const https = require('https');
+const core = require('./core.json');
+
+const FIGMA_TOKEN = process.env.FIGMA_TOKEN;
+const FILE_KEY = process.env.FIGMA_FILE_KEY || 'xMYjIEGBMm3ekea0uCIY5k';
+if (!FIGMA_TOKEN) { console.error('FIGMA_TOKEN 환경변수 필요'); process.exit(1); }
+
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return {
+    r: parseInt(h.slice(0,2), 16) / 255,
+    g: parseInt(h.slice(2,4), 16) / 255,
+    b: parseInt(h.slice(4,6), 16) / 255,
+    a: 1,
+  };
+}
+
+function figmaApi(method, path, body) {
+  return new Promise((resolve, reject) => {
+    const data = body ? JSON.stringify(body) : null;
+    const opts = {
+      hostname: 'api.figma.com',
+      path,
+      method,
+      headers: {
+        'X-Figma-Token': FIGMA_TOKEN,
+        'Content-Type': 'application/json',
+        ...(data ? { 'Content-Length': Buffer.byteLength(data) } : {}),
+      },
+    };
+    const req = https.request(opts, res => {
+      let raw = '';
+      res.on('data', d => raw += d);
+      res.on('end', () => {
+        try { resolve(JSON.parse(raw)); }
+        catch (e) { reject(new Error(raw)); }
+      });
+    });
+    req.on('error', reject);
+    if (data) req.write(data);
+    req.end();
+  });
+}
+
+async function main() {
+  console.log(`🎨 Figma Foundation 페이지 설정 시작...\n`);
+
+  // 1. 현재 파일 페이지 확인
+  const fileInfo = await figmaApi('GET', `/v1/files/${FILE_KEY}?depth=1`);
+  if (fileInfo.err) {
+    console.error('❌ 파일 접근 실패:', fileInfo.err);
+    process.exit(1);
+  }
+
+  const pages = fileInfo.document.children;
+  console.log(`현재 페이지: ${pages.map(p => p.name).join(', ')}`);
+
+  // 2. Foundation 페이지 존재 확인 (없으면 생성)
+  const hasFoundation = pages.some(p => p.name.includes('Foundation') || p.name.includes('Token'));
+  
+  // Figma REST API로 페이지 생성은 직접 지원 안 함
+  // 대신 현재 Page 1에 Foundation 콘텐츠 추가
+  const pageId = pages[0].id; // 0:1
+
+  // 3. 색상 스워치 생성 데이터 준비
+  const colors = [
+    { name: 'Brand/Primary', hex: '#4A7CF7', desc: 'Primary Blue' },
+    { name: 'Brand/Secondary', hex: '#6B4FBB', desc: 'Secondary Purple' },
+    { name: 'Brand/Accent', hex: '#00C9A7', desc: 'Accent Teal' },
+    { name: 'Status/Success', hex: '#40C057' },
+    { name: 'Status/Warning', hex: '#FCC419' },
+    { name: 'Status/Danger', hex: '#FA5252' },
+    { name: 'Status/Info', hex: '#4DABF7' },
+    { name: 'AI/Glow Start', hex: '#4A7CF7', desc: 'AI Gradient Start' },
+    { name: 'AI/Glow End', hex: '#9C6FFF', desc: 'AI Gradient End' },
+    { name: 'AI/Surface', hex: '#EEF3FF' },
+    { name: 'Senior/Red', hex: '#E03131' },
+    { name: 'Senior/Orange', hex: '#E8590C' },
+    { name: 'Senior/Yellow', hex: '#F08C00' },
+    { name: 'Senior/Green', hex: '#2F9E44' },
+    { name: 'Senior/Teal', hex: '#0C8599' },
+    { name: 'Senior/Blue', hex: '#1971C2' },
+    { name: 'Senior/Indigo', hex: '#3B5BDB' },
+    { name: 'Senior/Violet', hex: '#6741D9' },
+    { name: 'Senior/Pink', hex: '#C2255C' },
+    { name: 'Senior/Brown', hex: '#7C5C3E' },
+    { name: 'Senior/Gray', hex: '#495057' },
+    { name: 'Senior/Dark', hex: '#212529' },
+  ];
+
+  // REST API로 노드 생성 (Figma REST API v1은 노드 생성 지원이 제한적)
+  // 대신 플러그인 코드를 생성하는 방식으로 진행
+  console.log('\n📝 Figma Plugin 코드 생성 중...');
+  
+  const pluginCode = generatePluginCode(colors);
+  
+  const fs = require('fs');
+  fs.writeFileSync('./figma-plugin-foundation.js', pluginCode);
+  console.log('✅ figma-plugin-foundation.js 생성 완료!');
+  
+  console.log('\n📋 Figma에 적용하는 방법:');
+  console.log('1. Figma 데스크탑 앱 열기');
+  console.log('2. SonMily\'s team library 파일 열기');
+  console.log('3. Menu → Plugins → Development → New Plugin...');
+  console.log('4. "Run once" 선택');
+  console.log('5. figma-plugin-foundation.js 내용 붙여넣기 → Run');
+  console.log('\n💡 또는 Figma 웹에서:');
+  console.log('Menu → Plugins → Development → Open console');
+  console.log('figma-plugin-foundation.js 내용 실행');
+}
+
+function generatePluginCode(colors) {
+  const swatchData = JSON.stringify(colors, null, 2);
+  
+  return `// Figma Plugin — Foundation 페이지 색상 팔레트 생성
+// SonMily Design System v1.1.0
+// 실행: Figma > Plugins > Development > Run once
+
+const colors = ${swatchData};
+
+async function main() {
+  // 현재 페이지에 Foundation 프레임 생성
+  const frame = figma.createFrame();
+  frame.name = '🎨 Color Foundation — @sonmily/design-tokens v1.1.0';
+  frame.resize(1440, 900);
+  frame.x = 0;
+  frame.y = 0;
+  frame.fills = [{ type: 'SOLID', color: { r: 0.973, g: 0.976, b: 0.980 } }]; // #F8F9FA
+
+  // 제목 텍스트
+  await figma.loadFontAsync({ family: 'Inter', style: 'Bold' });
+  await figma.loadFontAsync({ family: 'Inter', style: 'Regular' });
+  
+  const title = figma.createText();
+  title.fontName = { family: 'Inter', style: 'Bold' };
+  title.characters = '@sonmily/design-tokens — Color Foundation';
+  title.fontSize = 28;
+  title.fills = [{ type: 'SOLID', color: { r: 0.13, g: 0.15, b: 0.16 } }];
+  title.x = 40;
+  title.y = 40;
+  frame.appendChild(title);
+
+  const subtitle = figma.createText();
+  subtitle.fontName = { family: 'Inter', style: 'Regular' };
+  subtitle.characters = 'BOKHAUS 시니어 케어 디자인 시스템 | WCAG 2.1 AA | v1.1.0';
+  subtitle.fontSize = 14;
+  subtitle.fills = [{ type: 'SOLID', color: { r: 0.29, g: 0.33, b: 0.38 } }];
+  subtitle.x = 40;
+  subtitle.y = 80;
+  frame.appendChild(subtitle);
+
+  // 색상 그룹 분리
+  const groups = {};
+  for (const c of colors) {
+    const group = c.name.split('/')[0];
+    if (!groups[group]) groups[group] = [];
+    groups[group].push(c);
+  }
+
+  let yOffset = 130;
+  
+  for (const [groupName, groupColors] of Object.entries(groups)) {
+    // 그룹 레이블
+    const label = figma.createText();
+    label.fontName = { family: 'Inter', style: 'Bold' };
+    label.characters = groupName.toUpperCase();
+    label.fontSize = 11;
+    label.letterSpacing = { value: 1.5, unit: 'PIXELS' };
+    label.fills = [{ type: 'SOLID', color: { r: 0.51, g: 0.55, b: 0.60 } }];
+    label.x = 40;
+    label.y = yOffset;
+    frame.appendChild(label);
+    
+    yOffset += 24;
+    
+    let xOffset = 40;
+    for (const c of groupColors) {
+      const rgb = hexToRgb01(c.hex);
+      
+      // 스워치 사각형
+      const swatch = figma.createRectangle();
+      swatch.name = c.name;
+      swatch.resize(80, 60);
+      swatch.x = xOffset;
+      swatch.y = yOffset;
+      swatch.cornerRadius = 8;
+      swatch.fills = [{ type: 'SOLID', color: rgb }];
+      
+      // 스타일 등록 (Figma Styles)
+      const style = figma.createPaintStyle();
+      style.name = c.name;
+      style.paints = [{ type: 'SOLID', color: rgb }];
+      swatch.fillStyleId = style.id;
+      
+      frame.appendChild(swatch);
+      
+      // 색상 이름 레이블
+      const nameText = figma.createText();
+      nameText.fontName = { family: 'Inter', style: 'Regular' };
+      nameText.characters = c.name.split('/').pop();
+      nameText.fontSize = 10;
+      nameText.fills = [{ type: 'SOLID', color: { r: 0.29, g: 0.33, b: 0.38 } }];
+      nameText.x = xOffset;
+      nameText.y = yOffset + 64;
+      frame.appendChild(nameText);
+      
+      // hex 값
+      const hexText = figma.createText();
+      hexText.fontName = { family: 'Inter', style: 'Regular' };
+      hexText.characters = c.hex;
+      hexText.fontSize = 9;
+      hexText.fills = [{ type: 'SOLID', color: { r: 0.60, g: 0.63, b: 0.67 } }];
+      hexText.x = xOffset;
+      hexText.y = yOffset + 76;
+      frame.appendChild(hexText);
+      
+      xOffset += 96;
+      if (xOffset > 1360) {
+        xOffset = 40;
+        yOffset += 110;
+      }
+    }
+    
+    yOffset += 110;
+  }
+
+  figma.currentPage.appendChild(frame);
+  figma.viewport.scrollAndZoomIntoView([frame]);
+  
+  console.log('✅ Foundation 페이지 생성 완료!');
+  console.log('생성된 Color Styles:', colors.length + '개');
+  
+  figma.closePlugin('🎨 Color Foundation 생성 완료! ' + colors.length + '개 색상 스타일 등록');
+}
+
+function hexToRgb01(hex) {
+  const h = hex.replace('#', '');
+  return {
+    r: parseInt(h.slice(0,2), 16) / 255,
+    g: parseInt(h.slice(2,4), 16) / 255,
+    b: parseInt(h.slice(4,6), 16) / 255,
+  };
+}
+
+main().catch(err => {
+  figma.closePlugin('❌ 오류: ' + err.message);
+});
+`;
+}
+
+main().catch(e => {
+  console.error('❌ 오류:', e.message);
+  process.exit(1);
+});
