@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@sonmily/design-tokens — 디자인 시스템 토큰</title>
+  <style>
+    :root {
+      --brand-primary: #4A7CF7;
+      --brand-secondary: #6B4FBB;
+      --brand-accent: #00C9A7;
+      --bg: #F8F9FA;
+      --surface: #FFFFFF;
+      --text: #212529;
+      --text-secondary: #495057;
+      --border: #DEE2E6;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+      color: white;
+      padding: 48px 40px;
+    }
+    header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    header p { font-size: 16px; opacity: 0.85; }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px; }
+    section { margin-bottom: 48px; }
+    section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--brand-primary);
+      color: var(--brand-primary);
+    }
+    .group { margin-bottom: 28px; }
+    .group h3 {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+    .swatch { text-align: center; }
+    .color {
+      width: 80px;
+      height: 64px;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .swatch .label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+    /* 타이포그래피 */
+    .type-scale { display: flex; flex-direction: column; gap: 12px; }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+    }
+    .type-meta { min-width: 180px; font-size: 12px; color: var(--text-secondary); }
+    .type-sample { flex: 1; }
+    /* 스페이싱 */
+    .spacing-list { display: flex; flex-wrap: wrap; gap: 16px; }
+    .spacing-item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      text-align: center;
+      min-width: 80px;
+    }
+    .spacing-bar {
+      height: 8px;
+      background: var(--brand-primary);
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .spacing-item .val { font-size: 18px; font-weight: 700; color: var(--brand-primary); }
+    .spacing-item .key { font-size: 11px; color: var(--text-secondary); }
+    /* 터치 타겟 */
+    .touch-targets { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+    .touch-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .touch-box {
+      background: rgba(74, 124, 247, 0.12);
+      border: 2px dashed var(--brand-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--brand-primary);
+      font-size: 12px;
+    }
+    .touch-label { font-size: 12px; color: var(--text-secondary); text-align: center; }
+    /* AI 섹션 */
+    .ai-demo {
+      background: linear-gradient(135deg, rgba(74,124,247,0.08), rgba(156,111,255,0.08));
+      border: 1px solid #748FFC;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 0 20px rgba(74,124,247,0.2);
+    }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #4A7CF7, #9C6FFF);
+      color: white;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    /* 토큰 코드 */
+    .token-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .token-table th, .token-table td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .token-table th { background: var(--bg); font-weight: 600; color: var(--text-secondary); }
+    .token-table tr:hover { background: var(--bg); }
+    code { background: #F1F3F5; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+    .pill {
+      display: inline-block;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pill-color { background: rgba(74,124,247,0.12); color: var(--brand-primary); }
+    .pill-float { background: rgba(0,201,167,0.12); color: #00C9A7; }
+    .wcag-badge {
+      background: #22C55E;
+      color: white;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    footer {
+      text-align: center;
+      padding: 32px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    footer a { color: var(--brand-primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>🎨 @sonmily/design-tokens</h1>
+  <p>손밀리 디자인 시스템 — 플랫폼 중립 디자인 토큰 (Web + React Native)</p>
+  <div class="badge">v1.1.0 · MIT License · WCAG 2.1 AA</div>
+</header>
+
+<div class="container">
+
+  <!-- 색상 -->
+  <section>
+    <h2>🎨 Color Tokens</h2>
+
+    <div class="group">
+      <h3>Brand</h3>
+      <div class="swatches">
+        <div class="swatch"><div class="color" style="background:#4A7CF7;color:#fff"><span>#4A7CF7</span></div><div class="label">primary</div></div>
+        <div class="swatch"><div class="color" style="background:#6B4FBB;color:#fff"><span>#6B4FBB</span></div><div class="label">secondary</div></div>
+        <div class="swatch"><div class="color" style="background:#00C9A7;color:#fff"><span>#00C9A7</span></div><div class="label">accent</div></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Status</h3>
+      <div class="swatches">
+        <div class="swatch"><div class="color" style="background:#40C057;color:#fff"><span>#40C057</span></div><div class="label">success</div></div>
+        <div class="swatch"><div class="color" style="background:#FCC419;color:#333"><span>#FCC419</span></div><div class="label">warning</div></div>
+        <div class="swatch"><div class="color" style="background:#FA5252;color:#fff"><span>#FA5252</span></div><div class="label">danger</div></div>
+        <div class="swatch"><div class="color" style="background:#4DABF7;color:#fff"><span>#4DABF7</span></div><div class="label">info</div></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>AI Visual Language</h3>
+      <div class="ai-demo">
+        <div class="ai-badge">✨ AI 응답</div>
+        <p style="color:#495057;font-size:14px;">AI 콘텐츠는 글로우 효과와 그라디언트로 일반 콘텐츠와 명확히 구분됩니다. (IBM Carbon for AI 패턴)</p>
+      </div>
+      <div class="swatches" style="margin-top:12px">
+        <div class="swatch"><div class="color" style="background:#4A7CF7;color:#fff"><span>#4A7CF7</span></div><div class="label">glow-start</div></div>
+        <div class="swatch"><div class="color" style="background:#9C6FFF;color:#fff"><span>#9C6FFF</span></div><div class="label">glow-end</div></div>
+        <div class="swatch"><div class="color" style="background:#EEF3FF;color:#333"><span>#EEF3FF</span></div><div class="label">surface</div></div>
+        <div class="swatch"><div class="color" style="background:#748FFC;color:#fff"><span>#748FFC</span></div><div class="label">border</div></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>BOKHAUS 시니어 팔레트 12색 <span class="wcag-badge">WCAG AA</span></h3>
+      <div class="swatches">
+        <div class="swatch"><div class="color" style="background:#E03131;color:#fff"><span>#E03131</span></div><div class="label">red</div></div>
+        <div class="swatch"><div class="color" style="background:#E8590C;color:#fff"><span>#E8590C</span></div><div class="label">orange</div></div>
+        <div class="swatch"><div class="color" style="background:#F08C00;color:#fff"><span>#F08C00</span></div><div class="label">yellow</div></div>
+        <div class="swatch"><div class="color" style="background:#2F9E44;color:#fff"><span>#2F9E44</span></div><div class="label">green</div></div>
+        <div class="swatch"><div class="color" style="background:#0C8599;color:#fff"><span>#0C8599</span></div><div class="label">teal</div></div>
+        <div class="swatch"><div class="color" style="background:#1971C2;color:#fff"><span>#1971C2</span></div><div class="label">blue</div></div>
+        <div class="swatch"><div class="color" style="background:#3B5BDB;color:#fff"><span>#3B5BDB</span></div><div class="label">indigo</div></div>
+        <div class="swatch"><div class="color" style="background:#6741D9;color:#fff"><span>#6741D9</span></div><div class="label">violet</div></div>
+        <div class="swatch"><div class="color" style="background:#C2255C;color:#fff"><span>#C2255C</span></div><div class="label">pink</div></div>
+        <div class="swatch"><div class="color" style="background:#7C5C3E;color:#fff"><span>#7C5C3E</span></div><div class="label">brown</div></div>
+        <div class="swatch"><div class="color" style="background:#495057;color:#fff"><span>#495057</span></div><div class="label">gray</div></div>
+        <div class="swatch"><div class="color" style="background:#212529;color:#fff"><span>#212529</span></div><div class="label">dark</div></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h3>Neutral Scale</h3>
+      <div class="swatches">
+        <div class="swatch"><div class="color" style="background:#FFFFFF;color:#333;border:1px solid #eee"><span>#FFFFFF</span></div><div class="label">0</div></div>
+        <div class="swatch"><div class="color" style="background:#F8F9FA;color:#333"><span>#F8F9FA</span></div><div class="label">50</div></div>
+        <div class="swatch"><div class="color" style="background:#F1F3F5;color:#333"><span>#F1F3F5</span></div><div class="label">100</div></div>
+        <div class="swatch"><div class="color" style="background:#E9ECEF;color:#333"><span>#E9ECEF</span></div><div class="label">200</div></div>
+        <div class="swatch"><div class="color" style="background:#DEE2E6;color:#333"><span>#DEE2E6</span></div><div class="label">300</div></div>
+        <div class="swatch"><div class="color" style="background:#CED4DA;color:#333"><span>#CED4DA</span></div><div class="label">400</div></div>
+        <div class="swatch"><div class="color" style="background:#ADB5BD;color:#fff"><span>#ADB5BD</span></div><div class="label">500</div></div>
+        <div class="swatch"><div class="color" style="background:#868E96;color:#fff"><span>#868E96</span></div><div class="label">600</div></div>
+        <div class="swatch"><div class="color" style="background:#495057;color:#fff"><span>#495057</span></div><div class="label">700</div></div>
+        <div class="swatch"><div class="color" style="background:#343A40;color:#fff"><span>#343A40</span></div><div class="label">800</div></div>
+        <div class="swatch"><div class="color" style="background:#212529;color:#fff"><span>#212529</span></div><div class="label">900</div></div>
+        <div class="swatch"><div class="color" style="background:#000000;color:#fff"><span>#000000</span></div><div class="label">1000</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 타이포그래피 -->
+  <section>
+    <h2>✍️ Typography</h2>
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-meta"><code>senior-body</code><br>22px / 1.8 line-height</div>
+        <div class="type-sample" style="font-size:22px;line-height:1.8">건강한 하루를 시작하세요 <span class="wcag-badge">시니어</span></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>senior-label</code><br>20px / Bold</div>
+        <div class="type-sample" style="font-size:20px;font-weight:700">오늘의 활동 기록</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>3xl</code><br>30px / Bold</div>
+        <div class="type-sample" style="font-size:30px;font-weight:700">BOKHAUS</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>2xl</code><br>24px</div>
+        <div class="type-sample" style="font-size:24px">시니어 케어 서비스</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>xl</code><br>20px</div>
+        <div class="type-sample" style="font-size:20px">보호자 연결 완료</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>lg</code><br>18px</div>
+        <div class="type-sample" style="font-size:18px">오늘 걸음 수: 3,241보</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><code>md</code><br>16px</div>
+        <div class="type-sample" style="font-size:16px;color:#495057">기본 본문 텍스트 — 캡션, 설명글</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 스페이싱 -->
+  <section>
+    <h2>📐 Spacing Scale (8px 그리드)</h2>
+    <div class="spacing-list">
+      <div class="spacing-item"><div class="spacing-bar" style="width:4px"></div><div class="val">4</div><div class="key">spacing-1</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:8px"></div><div class="val">8</div><div class="key">spacing-2</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:12px"></div><div class="val">12</div><div class="key">spacing-3</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:16px"></div><div class="val">16</div><div class="key">spacing-4</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:20px"></div><div class="val">20</div><div class="key">spacing-5</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:24px"></div><div class="val">24</div><div class="key">spacing-6</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:32px"></div><div class="val">32</div><div class="key">spacing-8</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:40px"></div><div class="val">40</div><div class="key">spacing-10</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:48px"></div><div class="val">48</div><div class="key">spacing-12</div></div>
+      <div class="spacing-item"><div class="spacing-bar" style="width:64px"></div><div class="val">64</div><div class="key">spacing-16</div></div>
+    </div>
+  </section>
+
+  <!-- 터치 타겟 -->
+  <section>
+    <h2>👆 Touch Targets (시니어 접근성)</h2>
+    <div class="touch-targets">
+      <div class="touch-item">
+        <div class="touch-box" style="width:44px;height:44px">44</div>
+        <div class="touch-label">minimum<br>(WCAG 최소)</div>
+      </div>
+      <div class="touch-item">
+        <div class="touch-box" style="width:56px;height:56px">56</div>
+        <div class="touch-label">senior<br>(권장) <span class="wcag-badge">시니어</span></div>
+      </div>
+      <div class="touch-item">
+        <div class="touch-box" style="width:64px;height:64px;font-size:13px">64</div>
+        <div class="touch-label">senior-cta<br>(주요 CTA) <span class="wcag-badge">시니어</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 사용법 -->
+  <section>
+    <h2>🔌 사용법</h2>
+    <table class="token-table">
+      <thead>
+        <tr><th>플랫폼</th><th>import</th><th>사용 예시</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Web (CSS)</td>
+          <td><code>import '@sonmily/design-tokens/platforms/web'</code></td>
+          <td><code>color: var(--color-brand-primary);</code></td>
+        </tr>
+        <tr>
+          <td>React Native</td>
+          <td><code>import { tokens, getSemanticTokens } from '@sonmily/design-tokens/platforms/rn'</code></td>
+          <td><code>const t = getSemanticTokens(isDark);</code></td>
+        </tr>
+        <tr>
+          <td>JSON (raw)</td>
+          <td><code>import core from '@sonmily/design-tokens/core'</code></td>
+          <td><code>core.color.brand.primary.value</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Figma 동기화 -->
+  <section>
+    <h2>🎨 Figma Variables 동기화</h2>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;font-size:13px">
+      <p style="margin-bottom:12px">Figma 파일 키를 설정하면 Variables로 자동 동기화됩니다:</p>
+      <pre style="background:#212529;color:#F8F9FA;padding:16px;border-radius:8px;overflow:auto"><code style="background:transparent;color:inherit;font-size:12px">FIGMA_FILE_KEY=<파일키> node sync-to-figma.js
+
+# Figma 파일 URL에서 키 찾기:
+# https://www.figma.com/file/XXXXXXXX/파일명
+#                              ^^^^^^^^</code></pre>
+      <p style="margin-top:12px;color:var(--text-secondary)">동기화 항목: Color Variables (45개) + Number Variables (스페이싱·폰트·터치타겟, 28개)</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>@sonmily/design-tokens v1.1.0 · MIT · 
+    <a href="https://github.com/smk692/design-tokens" target="_blank">GitHub</a> · 
+    손밀리 디자인 시스템 · CPO 작성
+  </p>
+</footer>
+</body>
+</html>
