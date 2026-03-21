@@ -1,0 +1,114 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "color": {
+    "brand": {
+      "primary":   { "value": "#4A7CF7", "type": "color", "description": "Primary brand blue" },
+      "secondary": { "value": "#6B4FBB", "type": "color", "description": "Secondary purple" },
+      "accent":    { "value": "#00C9A7", "type": "color", "description": "Accent teal" }
+    },
+    "neutral": {
+      "0":    { "value": "#FFFFFF", "type": "color" },
+      "50":   { "value": "#F8F9FA", "type": "color" },
+      "100":  { "value": "#F1F3F5", "type": "color" },
+      "200":  { "value": "#E9ECEF", "type": "color" },
+      "300":  { "value": "#DEE2E6", "type": "color" },
+      "400":  { "value": "#CED4DA", "type": "color" },
+      "500":  { "value": "#ADB5BD", "type": "color" },
+      "600":  { "value": "#868E96", "type": "color" },
+      "700":  { "value": "#495057", "type": "color" },
+      "800":  { "value": "#343A40", "type": "color" },
+      "900":  { "value": "#212529", "type": "color" },
+      "1000": { "value": "#000000", "type": "color" }
+    },
+    "status": {
+      "success": { "value": "#40C057", "type": "color" },
+      "warning": { "value": "#FCC419", "type": "color" },
+      "danger":  { "value": "#FA5252", "type": "color" },
+      "info":    { "value": "#4DABF7", "type": "color" }
+    },
+    "ai": {
+      "glow-start": { "value": "#4A7CF7", "type": "color", "description": "AI 글로우 그라디언트 시작" },
+      "glow-end":   { "value": "#9C6FFF", "type": "color", "description": "AI 글로우 그라디언트 끝" },
+      "surface":    { "value": "#EEF3FF", "type": "color", "description": "AI 콘텐츠 배경" },
+      "border":     { "value": "#748FFC", "type": "color", "description": "AI 컴포넌트 보더" }
+    },
+    "senior": {
+      "comment": "BOKHAUS 12색 팔레트 — WCAG 2.1 AA 이상 대비율 보장",
+      "red":    { "value": "#E03131", "type": "color" },
+      "orange": { "value": "#E8590C", "type": "color" },
+      "yellow": { "value": "#F08C00", "type": "color" },
+      "green":  { "value": "#2F9E44", "type": "color" },
+      "teal":   { "value": "#0C8599", "type": "color" },
+      "blue":   { "value": "#1971C2", "type": "color" },
+      "indigo": { "value": "#3B5BDB", "type": "color" },
+      "violet": { "value": "#6741D9", "type": "color" },
+      "pink":   { "value": "#C2255C", "type": "color" },
+      "brown":  { "value": "#7C5C3E", "type": "color" },
+      "gray":   { "value": "#495057", "type": "color" },
+      "dark":   { "value": "#212529", "type": "color" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "base": { "value": "'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif", "type": "fontFamily" },
+      "mono": { "value": "'JetBrains Mono', 'Fira Code', monospace",            "type": "fontFamily" }
+    },
+    "fontSize": {
+      "xs":           { "value": "12", "type": "dimension" },
+      "sm":           { "value": "14", "type": "dimension" },
+      "md":           { "value": "16", "type": "dimension" },
+      "lg":           { "value": "18", "type": "dimension" },
+      "xl":           { "value": "20", "type": "dimension" },
+      "2xl":          { "value": "24", "type": "dimension" },
+      "3xl":          { "value": "30", "type": "dimension" },
+      "senior-body":  { "value": "22", "type": "dimension", "description": "시니어 기본 본문 (가독성)" },
+      "senior-label": { "value": "20", "type": "dimension", "description": "시니어 레이블 최솟값" }
+    },
+    "fontWeight": {
+      "regular":  { "value": "400", "type": "fontWeight" },
+      "medium":   { "value": "500", "type": "fontWeight" },
+      "semibold": { "value": "600", "type": "fontWeight" },
+      "bold":     { "value": "700", "type": "fontWeight" }
+    },
+    "lineHeight": {
+      "tight":   { "value": "1.2",  "type": "number" },
+      "normal":  { "value": "1.5",  "type": "number" },
+      "relaxed": { "value": "1.75", "type": "number" },
+      "senior":  { "value": "1.8",  "type": "number", "description": "시니어 가독성 최적" }
+    }
+  },
+  "spacing": {
+    "0":  { "value": "0",  "type": "dimension" },
+    "1":  { "value": "4",  "type": "dimension" },
+    "2":  { "value": "8",  "type": "dimension" },
+    "3":  { "value": "12", "type": "dimension" },
+    "4":  { "value": "16", "type": "dimension" },
+    "5":  { "value": "20", "type": "dimension" },
+    "6":  { "value": "24", "type": "dimension" },
+    "8":  { "value": "32", "type": "dimension" },
+    "10": { "value": "40", "type": "dimension" },
+    "12": { "value": "48", "type": "dimension" },
+    "16": { "value": "64", "type": "dimension" },
+    "20": { "value": "80", "type": "dimension" }
+  },
+  "borderRadius": {
+    "none": { "value": "0",    "type": "dimension" },
+    "sm":   { "value": "4",    "type": "dimension" },
+    "md":   { "value": "8",    "type": "dimension" },
+    "lg":   { "value": "12",   "type": "dimension" },
+    "xl":   { "value": "16",   "type": "dimension" },
+    "2xl":  { "value": "24",   "type": "dimension" },
+    "full": { "value": "9999", "type": "dimension" }
+  },
+  "touchTarget": {
+    "minimum":    { "value": "44", "type": "dimension", "description": "WCAG 최소 터치 타겟 (44×44px)" },
+    "senior":     { "value": "56", "type": "dimension", "description": "시니어 권장 터치 타겟 (56×56px)" },
+    "senior-cta": { "value": "64", "type": "dimension", "description": "시니어 주요 CTA 버튼" }
+  },
+  "shadow": {
+    "sm":      { "value": "0 1px 3px rgba(0,0,0,0.12)",    "type": "shadow" },
+    "md":      { "value": "0 4px 6px rgba(0,0,0,0.10)",    "type": "shadow" },
+    "lg":      { "value": "0 10px 15px rgba(0,0,0,0.10)",  "type": "shadow" },
+    "ai-glow": { "value": "0 0 20px rgba(74,124,247,0.35)","type": "shadow", "description": "AI 컴포넌트 글로우 — Web only" }
+  }
+}

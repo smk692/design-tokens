@@ -1,0 +1,109 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "_comment": "semantic.json — core 토큰을 역할(role) 기반으로 매핑. 라이트/다크 두 세트 모두 정의.",
+
+  "light": {
+    "background": {
+      "default":   { "value": "{color.neutral.0}",   "type": "color" },
+      "subtle":    { "value": "{color.neutral.50}",  "type": "color" },
+      "muted":     { "value": "{color.neutral.100}", "type": "color" },
+      "ai":        { "value": "{color.ai.surface}",  "type": "color" }
+    },
+    "foreground": {
+      "default":   { "value": "{color.neutral.900}", "type": "color" },
+      "muted":     { "value": "{color.neutral.600}", "type": "color" },
+      "disabled":  { "value": "{color.neutral.400}", "type": "color" },
+      "inverse":   { "value": "{color.neutral.0}",   "type": "color" }
+    },
+    "border": {
+      "default":   { "value": "{color.neutral.200}", "type": "color" },
+      "strong":    { "value": "{color.neutral.400}", "type": "color" },
+      "ai":        { "value": "{color.ai.border}",   "type": "color" }
+    },
+    "interactive": {
+      "primary":          { "value": "{color.brand.primary}",   "type": "color" },
+      "primary-hover":    { "value": "#3D6FE0",                 "type": "color" },
+      "primary-active":   { "value": "#2F5EC9",                 "type": "color" },
+      "primary-text":     { "value": "{color.neutral.0}",       "type": "color" },
+      "secondary":        { "value": "{color.brand.secondary}", "type": "color" },
+      "danger":           { "value": "{color.status.danger}",   "type": "color" },
+      "success":          { "value": "{color.status.success}",  "type": "color" }
+    },
+    "senior": {
+      "background":    { "value": "{color.neutral.0}",   "type": "color" },
+      "text-primary":  { "value": "{color.neutral.900}", "type": "color", "description": "최소 4.5:1 대비율" },
+      "text-secondary":{ "value": "{color.neutral.700}", "type": "color" },
+      "button-bg":     { "value": "{color.brand.primary}", "type": "color" },
+      "button-text":   { "value": "{color.neutral.0}",    "type": "color" },
+      "focus-ring":    { "value": "#4A7CF7",              "type": "color", "description": "포커스 링 3px solid" }
+    }
+  },
+
+  "dark": {
+    "background": {
+      "default":   { "value": "{color.neutral.900}", "type": "color" },
+      "subtle":    { "value": "{color.neutral.800}", "type": "color" },
+      "muted":     { "value": "{color.neutral.700}", "type": "color" },
+      "ai":        { "value": "#1A1F3A",             "type": "color" }
+    },
+    "foreground": {
+      "default":   { "value": "{color.neutral.50}",  "type": "color" },
+      "muted":     { "value": "{color.neutral.400}", "type": "color" },
+      "disabled":  { "value": "{color.neutral.600}", "type": "color" },
+      "inverse":   { "value": "{color.neutral.900}", "type": "color" }
+    },
+    "border": {
+      "default":   { "value": "{color.neutral.700}", "type": "color" },
+      "strong":    { "value": "{color.neutral.500}", "type": "color" },
+      "ai":        { "value": "#5C7CFA",             "type": "color" }
+    },
+    "interactive": {
+      "primary":          { "value": "#6E9EFF",             "type": "color" },
+      "primary-hover":    { "value": "#82AFFF",             "type": "color" },
+      "primary-active":   { "value": "#5A8FFF",             "type": "color" },
+      "primary-text":     { "value": "{color.neutral.900}", "type": "color" },
+      "secondary":        { "value": "#9B7FE8",             "type": "color" },
+      "danger":           { "value": "#FF7B7B",             "type": "color" },
+      "success":          { "value": "#69DB7C",             "type": "color" }
+    },
+    "senior": {
+      "background":    { "value": "#1A1A2E",             "type": "color", "description": "시니어 다크모드 — 순수 검정 지양" },
+      "text-primary":  { "value": "{color.neutral.50}",  "type": "color" },
+      "text-secondary":{ "value": "{color.neutral.300}", "type": "color" },
+      "button-bg":     { "value": "#6E9EFF",             "type": "color" },
+      "button-text":   { "value": "{color.neutral.900}", "type": "color" },
+      "focus-ring":    { "value": "#82AFFF",             "type": "color" }
+    }
+  },
+
+  "component": {
+    "button": {
+      "padding-x":        { "value": "{spacing.5}",            "type": "dimension" },
+      "padding-y":        { "value": "{spacing.3}",            "type": "dimension" },
+      "border-radius":    { "value": "{borderRadius.lg}",      "type": "dimension" },
+      "font-weight":      { "value": "{typography.fontWeight.semibold}", "type": "fontWeight" },
+      "font-size":        { "value": "{typography.fontSize.md}",         "type": "dimension" },
+      "min-height":       { "value": "{touchTarget.minimum}",            "type": "dimension" }
+    },
+    "button-senior": {
+      "padding-x":        { "value": "{spacing.8}",            "type": "dimension" },
+      "padding-y":        { "value": "{spacing.5}",            "type": "dimension" },
+      "border-radius":    { "value": "{borderRadius.xl}",      "type": "dimension" },
+      "font-size":        { "value": "{typography.fontSize.senior-body}", "type": "dimension" },
+      "font-weight":      { "value": "{typography.fontWeight.bold}",      "type": "fontWeight" },
+      "min-height":       { "value": "{touchTarget.senior-cta}",          "type": "dimension" }
+    },
+    "card": {
+      "padding":          { "value": "{spacing.6}",        "type": "dimension" },
+      "border-radius":    { "value": "{borderRadius.xl}",  "type": "dimension" },
+      "shadow":           { "value": "{shadow.md}",        "type": "shadow" }
+    },
+    "ai-badge": {
+      "padding-x":        { "value": "{spacing.3}", "type": "dimension" },
+      "padding-y":        { "value": "{spacing.1}", "type": "dimension" },
+      "border-radius":    { "value": "{borderRadius.full}", "type": "dimension" },
+      "font-size":        { "value": "{typography.fontSize.xs}", "type": "dimension" },
+      "font-weight":      { "value": "{typography.fontWeight.semibold}", "type": "fontWeight" }
+    }
+  }
+}

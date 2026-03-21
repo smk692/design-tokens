@@ -1,0 +1,178 @@
+/**
+ * @sonmily/design-tokens — Web CSS Variables
+ * Auto-generated from core.json + semantic.json
+ * Style Dictionary로 빌드 시 이 파일은 덮어씌워집니다.
+ *
+ * 사용법:
+ *   import '@sonmily/design-tokens/platforms/web.css';
+ *   .btn { background: var(--color-brand-primary); }
+ */
+
+:root {
+  /* ─── Brand Colors ─── */
+  --color-brand-primary:   #4A7CF7;
+  --color-brand-secondary: #6B4FBB;
+  --color-brand-accent:    #00C9A7;
+
+  /* ─── Neutral Scale ─── */
+  --color-neutral-0:    #FFFFFF;
+  --color-neutral-50:   #F8F9FA;
+  --color-neutral-100:  #F1F3F5;
+  --color-neutral-200:  #E9ECEF;
+  --color-neutral-300:  #DEE2E6;
+  --color-neutral-400:  #CED4DA;
+  --color-neutral-500:  #ADB5BD;
+  --color-neutral-600:  #868E96;
+  --color-neutral-700:  #495057;
+  --color-neutral-800:  #343A40;
+  --color-neutral-900:  #212529;
+  --color-neutral-1000: #000000;
+
+  /* ─── Status ─── */
+  --color-status-success: #40C057;
+  --color-status-warning: #FCC419;
+  --color-status-danger:  #FA5252;
+  --color-status-info:    #4DABF7;
+
+  /* ─── AI Visual Language ─── */
+  --color-ai-glow-start: #4A7CF7;
+  --color-ai-glow-end:   #9C6FFF;
+  --color-ai-surface:    #EEF3FF;
+  --color-ai-border:     #748FFC;
+  --gradient-ai:         linear-gradient(135deg, #4A7CF7 0%, #9C6FFF 100%);
+  --shadow-ai-glow:      0 0 20px rgba(74, 124, 247, 0.35);
+
+  /* ─── Typography ─── */
+  --font-family-base:   'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  --font-family-mono:   'JetBrains Mono', 'Fira Code', monospace;
+  --font-size-xs:       0.75rem;   /* 12px */
+  --font-size-sm:       0.875rem;  /* 14px */
+  --font-size-md:       1rem;      /* 16px */
+  --font-size-lg:       1.125rem;  /* 18px */
+  --font-size-xl:       1.25rem;   /* 20px */
+  --font-size-2xl:      1.5rem;    /* 24px */
+  --font-size-3xl:      1.875rem;  /* 30px */
+  --font-size-senior-body:  1.375rem;  /* 22px — 시니어 본문 */
+  --font-size-senior-label: 1.25rem;   /* 20px — 시니어 레이블 */
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --line-height-tight:   1.2;
+  --line-height-normal:  1.5;
+  --line-height-relaxed: 1.75;
+  --line-height-senior:  1.8;
+
+  /* ─── Spacing (8px grid) ─── */
+  --spacing-0:  0;
+  --spacing-1:  0.25rem;   /* 4px */
+  --spacing-2:  0.5rem;    /* 8px */
+  --spacing-3:  0.75rem;   /* 12px */
+  --spacing-4:  1rem;      /* 16px */
+  --spacing-5:  1.25rem;   /* 20px */
+  --spacing-6:  1.5rem;    /* 24px */
+  --spacing-8:  2rem;      /* 32px */
+  --spacing-10: 2.5rem;    /* 40px */
+  --spacing-12: 3rem;      /* 48px */
+  --spacing-16: 4rem;      /* 64px */
+  --spacing-20: 5rem;      /* 80px */
+
+  /* ─── Border Radius ─── */
+  --border-radius-none: 0;
+  --border-radius-sm:   0.25rem;  /* 4px */
+  --border-radius-md:   0.5rem;   /* 8px */
+  --border-radius-lg:   0.75rem;  /* 12px */
+  --border-radius-xl:   1rem;     /* 16px */
+  --border-radius-2xl:  1.5rem;   /* 24px */
+  --border-radius-full: 9999px;
+
+  /* ─── Touch Targets ─── */
+  --touch-target-minimum:    44px;
+  --touch-target-senior:     56px;
+  --touch-target-senior-cta: 64px;
+
+  /* ─── Shadows ─── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.10);
+
+  /* ─── Semantic: Light Mode ─── */
+  --bg-default:       var(--color-neutral-0);
+  --bg-subtle:        var(--color-neutral-50);
+  --bg-muted:         var(--color-neutral-100);
+  --bg-ai:            var(--color-ai-surface);
+
+  --fg-default:       var(--color-neutral-900);
+  --fg-muted:         var(--color-neutral-600);
+  --fg-disabled:      var(--color-neutral-400);
+  --fg-inverse:       var(--color-neutral-0);
+
+  --border-default:   var(--color-neutral-200);
+  --border-strong:    var(--color-neutral-400);
+  --border-ai:        var(--color-ai-border);
+
+  --interactive-primary:        var(--color-brand-primary);
+  --interactive-primary-hover:  #3D6FE0;
+  --interactive-primary-active: #2F5EC9;
+  --interactive-primary-text:   var(--color-neutral-0);
+  --interactive-danger:         var(--color-status-danger);
+  --interactive-success:        var(--color-status-success);
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-default:       var(--color-neutral-900);
+    --bg-subtle:        var(--color-neutral-800);
+    --bg-muted:         var(--color-neutral-700);
+    --bg-ai:            #1A1F3A;
+
+    --fg-default:       var(--color-neutral-50);
+    --fg-muted:         var(--color-neutral-400);
+    --fg-disabled:      var(--color-neutral-600);
+    --fg-inverse:       var(--color-neutral-900);
+
+    --border-default:   var(--color-neutral-700);
+    --border-strong:    var(--color-neutral-500);
+    --border-ai:        #5C7CFA;
+
+    --interactive-primary:        #6E9EFF;
+    --interactive-primary-hover:  #82AFFF;
+    --interactive-primary-active: #5A8FFF;
+    --interactive-primary-text:   var(--color-neutral-900);
+    --interactive-danger:         #FF7B7B;
+    --interactive-success:        #69DB7C;
+  }
+}
+
+/* ─── Dark Mode Toggle (data-theme) ─── */
+[data-theme="dark"] {
+  --bg-default:       var(--color-neutral-900);
+  --bg-subtle:        var(--color-neutral-800);
+  --bg-muted:         var(--color-neutral-700);
+  --bg-ai:            #1A1F3A;
+
+  --fg-default:       var(--color-neutral-50);
+  --fg-muted:         var(--color-neutral-400);
+  --fg-disabled:      var(--color-neutral-600);
+  --fg-inverse:       var(--color-neutral-900);
+
+  --border-default:   var(--color-neutral-700);
+  --border-strong:    var(--color-neutral-500);
+  --border-ai:        #5C7CFA;
+
+  --interactive-primary:        #6E9EFF;
+  --interactive-primary-hover:  #82AFFF;
+  --interactive-primary-active: #5A8FFF;
+  --interactive-primary-text:   var(--color-neutral-900);
+  --interactive-danger:         #FF7B7B;
+  --interactive-success:        #69DB7C;
+}
+
+/* ─── Senior Mode (data-theme="senior") ─── */
+[data-theme="senior"] {
+  --font-size-body:   var(--font-size-senior-body);
+  --font-size-label:  var(--font-size-senior-label);
+  --line-height-body: var(--line-height-senior);
+  --touch-target-btn: var(--touch-target-senior-cta);
+}

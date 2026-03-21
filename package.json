@@ -1,0 +1,43 @@
+{
+  "name": "@sonmily/design-tokens",
+  "version": "1.1.0",
+  "description": "손밀리 디자인 시스템 토큰 — Web CSS Variables + React Native TypeScript",
+  "main": "platforms/rn.ts",
+  "exports": {
+    ".": "./platforms/rn.ts",
+    "./platforms/rn": "./platforms/rn.ts",
+    "./platforms/web": "./platforms/web.css",
+    "./core": "./core.json",
+    "./semantic": "./semantic.json"
+  },
+  "files": [
+    "core.json",
+    "semantic.json",
+    "platforms/",
+    "README.md"
+  ],
+  "keywords": [
+    "design-tokens",
+    "sonmily",
+    "bokhaus",
+    "senior-ux",
+    "react-native",
+    "accessibility",
+    "wcag"
+  ],
+  "author": "Sonmily",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.0.0",
+    "typescript": "^5.4.0"
+  },
+  "scripts": {
+    "build": "style-dictionary build --config sd.config.js",
+    "type-check": "tsc --noEmit"
+  }
+}
